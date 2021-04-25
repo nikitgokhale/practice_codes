@@ -1,0 +1,21 @@
+Making your own functions
+We can define new custom functions by giving a name and the sequence of statements that execute when the function is called. Once we define a function, we can reuse the function over and over throughout our program. For eg,
+
+def print_name():
+    name = "Cloudxlab"        
+    print("My name is", name)
+It assigns "Cloudxlab" to the variable name and then prints it.
+
+def is a keyword that indicates that this is a function definition. The name of the function is print_name.
+The rules for function names are the same as for variable names: letters, numbers and some punctuation marks are legal, but the first character can't be a number.
+You can't use a keyword as the name of a function, and you should avoid having a variable and a function with the same name.
+The empty parentheses after the name indicate that this function doesn't take any arguments. Later we will build functions that take arguments as their inputs.
+The first line of the function definition is called the header; the rest is called the body. The header has to end with a colon and the body has to be indented. By convention, the indentation is always four spaces. The body can contain any number of statements.
+Try printing the type of print_name and see the result,
+
+print(type(print_name))
+The syntax for calling the new function is the same as for built-in functions:
+
+print_name()
+We can call a function inside another function or within the same function (called recursion)
+The statements inside the function do not get executed until the function is called
