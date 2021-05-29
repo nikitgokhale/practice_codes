@@ -90,44 +90,76 @@ Node* createLinkedList(Node* head)
 	return head;
 }
 
-Node* merge(Node*& head1, Node*& head2)
+Node* divide(Node* p)
 {
-	Node* newHead;
-	if (head1 == NULL)
-		return head2;
-	else if (head2 == NULL)
-		return head1;
+	// Concept of slow and fast pointer is used
+	// p is moved once and q is moved twice until q == NULL
+	Node* q, *start_second;
+	q = p->next->next;
+	while (q != NULL){
+		p = p->next;
+		q = q->next;
+		if (q != NULL)
+			q = q->next;
+	}
+	// start_second holds the pointer reference to the 2nd list
+	start_second = p->next;
+	p->next = NULL;  // made the first list's end == NULL
 
-	if (head1->data < head2->data) {
-		newHead = head1;
-		newHead->next = merge(head1->next, head2);
-	}
-	else {
-		newHead = head2;
-		newHead->next = merge(head1, head2->next);
-	}
-	return newHead;
+	return start_second;
 }
 
-
-void mergeSort(Node*& head)
+Node* merge(Node* p1, Node* p2)
 {
-	if (head->next != NULL) {
-		Node* head1 = new Node;
-		Node* head2 = head;
-		int len = getLen(head);
-		for (int i = 0; i < len / 2; i++) {
-			head1 = head2;
-			head2 = head2->next;
+	Node* q, *start_merged;
+	// Giving the head reference of one of the list to the "start_merged"
+	if (p1->data <= p2->data){
+		start_merged = p1; // start_merged's head pointer will start from p1
+		p1 = p1->next;
+	}
+	else{
+		start_merged = p2; // start_merged's head pointer will start from p1
+		p2 = p2->next;
+	}
+	q = start_merged;
+	// Now the rest of the list can be traversed and merged with the same merger algorithm
+	while((p1 != NULL) && (p2 != NULL)){
+		if (p1->data <= p2->data){
+			q->next = p1;
+			q = q->next;
+			p1 = p1->next;
 		}
-		head1->next = NULL;
-		head1 = head;
-		mergeSort(head1);
-		mergeSort(head2);
-		head = merge(head1, head2);
+		else{
+			q->next = p2;
+			q = q->next;
+			p2 = p2->next;
+		}
 	}
+	// If there are still remaining nodes in the list, combine it with q
+	if (p1 != NULL)
+		q->next = p1;
+	else
+		q->next = p2;
+
+	return start_merged;
 }
 
+Node* mergeSort(Node* start)
+{
+	Node* start_first, *start_second, *start_merged;
+	// Base Case
+	if (start !=  NULL && start->next != NULL){
+		start_first = start;
+		start_second = divide(start);
+		start_first = mergeSort(start_first);
+		start_second = mergeSort(start_second);
+		start_merged = mergeSort(start_first, start_second);
+
+		return start_merged;
+	}
+	else
+		return start;
+}
 
 int main()
 {

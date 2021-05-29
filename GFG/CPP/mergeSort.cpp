@@ -26,14 +26,18 @@ void merge(int* arr, int low, int mid, const int high)
 	int i = low;
 	int j = mid+1;
 	int k = 0;
+	// Treverse throught both the list and compare which one in smaller
+	// the smaller one gets added in the tmp list first/
 	while ((i <= mid) && (j <= high)) {
 		if (arr[i] <= arr[j])
 			tmp[k++] = arr[i++];
 		else
 			tmp[k++] = arr[j++];
 	}
+	// Add the rest of the elements left in array1
 	while (i <= mid)
 		tmp[k++] = arr[i++];
+	// Add the rest of the elements left in array2
 	while (j < high)
 		tmp[k++] = arr[j++];
 	k--;
