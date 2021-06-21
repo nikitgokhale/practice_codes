@@ -1,28 +1,38 @@
+/* Hidden stub code will pass a root argument to the function below. Complete the function to solve the challenge. Hint: you may want to write one or more helper functions.  
 
-class Solution
-{
-    public:
-    //Function to check whether a Binary Tree is BST or not.
-    void isBSTUtil(Node* root, vector<int>& res)
+The Node struct is defined as follows:
+    struct Node {
+        int data;
+        Node* left;
+        Node* right;
+    }
+*/
+/* Approach:
+    Using a vector to determine if the given binary tree is BST 
+    In Inorder Traversal, the nodes are printed as left->root->right.
+    So with this way, if the given binary tree is a BST, then the inorder traversal
+    of a Binary Tree will be in ascending order.
+    So push the node's data into the vector in Inorder way.
+    Check the ascending order in the vector, if not followed, return false.
+    */
+    void checkBSTHelper(Node* root, vector<int>& res)
     {
-        if (root == NULL)
+        if(root == NULL)
             return;
-        isBSTUtil(root->left, res);
+        checkBSTHelper(root->left, res);
         res.push_back(root->data);
-        isBSTUtil(root->right, res);
+        checkBSTHelper(root->right, res);
     }
     
-    bool isBST(Node* root) 
+    bool checkBST(Node* root)
     {
-        // Your code here
         vector<int> res;
         res.clear();
-        isBSTUtil(root, res);
+        checkBSTHelper(root, res);
         
-        for(int i = 1; i < res.size(); i++){
-            if (res[i] <= res[i-1])
+        for(int i=0; i<res.size(); i++) {
+            if(res[i] <= res[i-1])
                 return false;
         }
         return true;
     }
-};
