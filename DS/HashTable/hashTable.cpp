@@ -35,7 +35,7 @@ int HashTable::hashFunction(int key) {
     return key % hashGroups; // If key  is 905, in return, this function will give 5
 }
 
-void HasTable::insertItem(int key, string value) {
+void HashTable::insertItem(int key, string value) {
     int hashValue = hashFunction(key);
     auto& cell = table[hashValue];
     auto bItr = begin(cell);
@@ -78,6 +78,25 @@ void HashTable::removeItem(int key) {
     return;
 }
 
+string HashTable::searchTable(int key) {
+    int hashValue = hashFunction(key);
+    auto& cell = table[hashValue];
+    auto bItr = begin(cell);
+    bool keyExist = false;
+
+    for (; bItr != end(cell); bItr++) {
+        if (bItr->first == key) {
+            keyExist = true;
+            cout << "[INFO] Pair with key " << key << " found with value ";
+            return bItr->second;
+        }
+    }
+
+    if (!keyExist) {
+        return "[INFO] No Pair exist in the searched key.";
+    }
+}
+
 void HashTable::printTable() {
     for (int i{}; i < hashGroups; i++) {
         if (table[i].size() == 0) continue;
@@ -106,6 +125,7 @@ int main() {
     HT.insertItem(101, "Jay");
     HT.insertItem(444, "Rob");
     HT.insertItem(309, "Van");
+    HT.insertItem(406, "Pam");
     HT.insertItem(477, "Sal");
     HT.insertItem(906, "Murr");
     HT.insertItem(906, "Q");
@@ -114,6 +134,10 @@ int main() {
 
     HT.removeItem(444);
     HT.removeItem(100);
+
+    cout << HT.searchTable(309) << endl;
+    cout << HT.searchTable(100) << endl;
+    cout << HT.searchTable(406) << endl;
 
     if (!HT.isEmpty()) {
         cout << "[INFO] The HashTable is empty." << endl;
