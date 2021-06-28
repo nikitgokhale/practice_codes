@@ -25,6 +25,7 @@ private:
 	void priv_insert(Node* root, int item);
 	void priv_destroy(Node* root);
 	void priv_inOrder(Node* root, vector<int>& inOrder_vect);
+	void priv_inOrderItr(Node* root, vector<int>& inOrder_vect);
 
 public:
 	binaryTree();
@@ -33,6 +34,7 @@ public:
 	void destroyTree();
 	void insert(int data);
 	void inOrder(vector<int>& inOrder_vect);
+	void inOrderItr(vector<int>& inOrder_vect);
 
 	Node* getNewNode(int data)
 	{
@@ -71,6 +73,11 @@ void binaryTree::inOrder(vector<int>& inOrder_vect)
 	cout << endl;
 }
 
+void binaryTree::inOrderItr(vector<int>& inOrder_vect) {
+	priv_inOrderItr(root, inOrder_vect);
+	cout << endl;
+}
+
 void binaryTree::priv_destroy(Node* root)
 {
 	if(root != NULL){
@@ -88,6 +95,33 @@ void binaryTree::priv_inOrder(Node* root, vector<int>& inOrder_vect)
 		inOrder_vect.push_back(root->data);
 		priv_inOrder(root->right, inOrder_vect);
 	}
+}
+
+void binaryTree::priv_inOrderItr(Node* root, vector<int>& inOrder_vect) {
+	/* Create an empty stack and set the current node to the root node */
+	Node* tmp = root;
+	stack<int> stack;
+
+	/* If the current root is null and the stack is also empty, then we're done */
+	while (!stack.empty() || tmp != NULL) {
+		/* If the current node exists, push it to the stack and move to its left
+		   child */
+		if (tmp != NULL) {
+			stack.push(tmp);
+			tmp = tmp->left;
+		} 
+		/* Otherwise if the current node is NULL, pop the element from the stack and
+		   push it to the vector.
+		   Finlly set the current node to its right child */
+		else {
+			tmp = stack.top();
+			stack.pop();
+			res.push_back(tmp->data);
+
+			tmp = tmp->right;
+		}
+	}
+
 }
 
 void binaryTree::priv_insert(Node* root, int item)
@@ -127,7 +161,8 @@ int main()
 	bTree->insert(88);
 	bTree->insert(53);
 	cout << "InOrder is: ";
-	bTree->inOrder(inOrder_vect);
+	// bTree->inOrder(inOrder_vect);
+	bTree->inOrderItr(inOrder_vect);
 
 	for (int i = 0; i < inOrder_vect.size(); i++)
 	{
