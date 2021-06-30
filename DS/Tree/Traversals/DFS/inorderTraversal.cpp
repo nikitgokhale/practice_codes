@@ -100,7 +100,7 @@ void binaryTree::priv_inOrder(Node* root, vector<int>& inOrder_vect)
 void binaryTree::priv_inOrderItr(Node* root, vector<int>& inOrder_vect) {
 	/* Create an empty stack and set the current node to the root node */
 	Node* tmp = root;
-	stack<int> stack;
+	stack<Node*> stack;
 
 	/* If the current root is null and the stack is also empty, then we're done */
 	while (!stack.empty() || tmp != NULL) {

@@ -1,6 +1,6 @@
 /* C++ code for Breadth First Traversal(BFS) 
    3. PostOrder Traversal*/
-#include <bits/stdc++.h>
+#include <stdc++.h>
 
 using namespace std;
 using std::vector;
@@ -24,6 +24,7 @@ private:
 	void priv_destroy(Node* root);
 	void priv_insert(Node* root, int item);
 	void priv_PostOrder(Node* root, vector<int>& postOrder_vect);
+	void priv_PostOrderItr(Node* root, vector<int>& postOrder_vect);
 
 public:
 	binaryTree();
@@ -32,6 +33,7 @@ public:
 	void destroyTree();
 	void insert(int item);
 	void postOrder(vector<int>& postOrder_vect);
+	void postOrderItr(vector<int>& postOrder_vect);
 
 	Node* getNewNode(int data)
 	{
@@ -67,6 +69,9 @@ void binaryTree::postOrder(vector<int>& postOrder_vect) {
 	priv_PostOrder(root, postOrder_vect);
 }
 
+void binaryTree::postOrderItr(vector<int>& postOrder_vect) {
+	priv_PostOrderItr(root, postOrder_vect);
+}
 
 void binaryTree::priv_destroy(Node* root)
 {
@@ -104,6 +109,38 @@ void binaryTree::priv_PostOrder(Node* root, vector<int>& postOrder_vect)
 	}
 }
 
+void binaryTree::priv_PostOrderItr(Node* root, vector<int>& postOrder_vect) {
+	// Base Case: if the tree is empty, return
+	if (!root) {
+		return;
+	}
+
+	// Create an empty stack and push the root node
+	stack<Node*> __stack;
+	__stack.push(root);
+	// Create an out stack which displays the postOrder traversal
+	stack<int> out;
+
+	while (!__stack.empty()) {
+		Node* tmp = __stack.top();
+		__stack.pop();
+
+		out.push(tmp->data);
+
+		if (tmp->left != NULL) {
+			__stack.push(tmp->left);
+		}
+		if (tmp->right != NULL) {
+			__stack.push(tmp->right);
+		}
+	}
+
+	while (!out.empty()) {
+		postOrder_vect.push_back(out.top());
+		out.pop();
+	}
+}
+
 int main()
 {
 	binaryTree *bTree = new binaryTree();
@@ -119,7 +156,8 @@ int main()
 	bTree->insert(88);
 	bTree->insert(53);
 	cout << "PostOrder is: ";
-	bTree->postOrder(postOrder_vect);
+	// bTree->postOrder(postOrder_vect);
+	bTree->postOrderItr(postOrder_vect);
 
 	for (int i = 0; i < postOrder_vect.size(); i++)
 	{
