@@ -1,6 +1,6 @@
 /* C++ code for Breadth First Traversal(BFS) 
    3. PostOrder Traversal*/
-#include <stdc++.h>
+#include <bits\stdc++.h>
 
 using namespace std;
 using std::vector;
@@ -120,13 +120,14 @@ void binaryTree::priv_PostOrderItr(Node* root, vector<int>& postOrder_vect) {
 	__stack.push(root);
 	// Create an out stack which displays the postOrder traversal
 	stack<int> out;
-
+	// Iterate till the stack is empty
 	while (!__stack.empty()) {
+		// Pop from the stack and push it into the output stack
 		Node* tmp = __stack.top();
 		__stack.pop();
 
 		out.push(tmp->data);
-
+		// Push the left and the right child of the popped node into the stack
 		if (tmp->left != NULL) {
 			__stack.push(tmp->left);
 		}
@@ -134,7 +135,7 @@ void binaryTree::priv_PostOrderItr(Node* root, vector<int>& postOrder_vect) {
 			__stack.push(tmp->right);
 		}
 	}
-
+	// Push the postOrder traversal into the resultant vector
 	while (!out.empty()) {
 		postOrder_vect.push_back(out.top());
 		out.pop();
