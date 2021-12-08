@@ -1,6 +1,6 @@
 class Solution {
 public:
-    /* **There will be n*(n+1)/2 substring with unique characters 
+    /*  There will be n*(n+1)/2 substring with unique characters 
         This solution uses extra space to store the last visited
         indexes of the already visited characters.
         This approach uses the Window Sliding Technique
